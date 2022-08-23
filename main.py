@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # @Time    : 8/24/22 12:57 AM
-# @FileName: 1.py
+# @FileName: main.py
 # @Software: PyCharm
 # @Github    ：sudoskys
+# @Version    ：1
 import math
 import random
 
