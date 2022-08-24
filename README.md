@@ -14,6 +14,9 @@ print(some.create())
 print(some.create()[0]) # 问题
 print(some.create()[1]) # 答案
 ```
+## 注意
+
+调用时每次创建一次(create)都会重新生成问题。
 
 ## 效果示例
 ```
