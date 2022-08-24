@@ -7,9 +7,7 @@
 ```python
 # 意思就是从模块文件夹调用模块文件，然后访问.Importer
 from CapthchaCore import main
-
-
-some = main.Importer().pull()
+some = main.Importer().pull(difficulty_limit=5)
 print(some.create())
 print(some.create()[0]) # 问题
 print(some.create()[1]) # 答案
