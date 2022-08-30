@@ -3,12 +3,7 @@
 # @FileName: CaptchaWorker.py
 # @Software: PyCharm
 # @Github    ：sudoskys
-# -*- coding: utf-8 -*-
-# @Time    : 8/24/22 12:57 AM
-# @FileName: main.py
-# @Software: PyCharm
-# @Github    ：sudoskys
-# @Version    ：1
+
 import json
 import math
 import random
@@ -28,6 +23,50 @@ difficulty = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 # print(choice(l)) # 随机抽取一个
 
 # print(random.randint(0, 9))
+
+
+# 学习强国
+class Chemical_verification(object):
+    def __init__(self, sample):
+        self.id = sample
+        pass
+
+    @property
+    def difficulty(self):
+        return 8
+
+    @staticmethod
+    def nofind():
+        lena = (random.randint(5, 20) * 2)
+        r = (random.randint(5, 10) * 2)
+        Q = f"NoFind:一个扇形弧长为{lena}，半径为{r}，求其面积为多少π！（四舍五入，只答出数字）"
+        A = (lena * r) / 2
+        Question = {"question": Q, "picture": None}
+        Answer = {"rightKey": round(A)}
+        return Question, Answer
+
+    @staticmethod
+    def create():
+        Pic = None
+        if pathlib.Path('data/PubChems.json').exists():
+            with open("data/PubChems.json", 'r') as tiku_file:
+                samples = json.load(tiku_file)
+            if samples is not None:
+                key_obj = random.sample(samples.keys(), 1)
+                Qn = key_obj[0]
+                Q = Qn + "\n\n输入大写选项字母"
+                An = (samples[Qn])
+                A = An.get("Answer")
+                Pic = An.get("Pic")
+            else:
+                Q, A = study_build_up.nofind()
+
+        else:
+            Q, A = study_build_up.nofind()
+        Question = {"question": Q, "picture": Pic}
+        Answer = {"rightKey": A}
+        return Question, Answer
+
 
 class Tool_CaptchaCore(object):
     def __init__(self):
@@ -165,7 +204,6 @@ class chemical_formula(object):
         tip_key = "H2O"
         input_, samples = Tool_CaptchaCore.peiping(one=inputs, two=output)
         tip = input_.get(tip_key)
-        print(samples)
         if samples:
             Q = f"现在有 {inputs}={output} 这个没有配平的化学方程式，不考虑是否合理的情况下，前面的{tip_key}的系数为{tip}请问方程式后半段的 {key} 的系数是多少？(答出数字)"
             A = samples.get(key)
@@ -204,6 +242,7 @@ class car_subject_one(object):
                 data_list = samples.get("datas")
                 well_data = [i for i in data_list if
                              i.get("answer") in ["A", "B", "C", "D"] and (i.get('pic') is None or i.get('pic') == "")]
+                random.shuffle(well_data)
                 key_obj = choice(well_data)
                 q = key_obj.get("question")
                 a = str(key_obj.get("opt1"))
@@ -639,51 +678,97 @@ class Combustion_Calculations(object):
         return Question, Answer
 
 
+# --------------------------------
+
+def Chemistry_Pic(s):
+    Chemistry_Pic = [
+        {"diff": Chemical_verification(s).difficulty,
+         "obj": Chemical_verification(s).create()},
+
+    ]
+    return Chemistry_Pic
+
+
+def Chemistry(s):
+    Chemistry = [
+        {"diff": Combustion_Calculations(s).difficulty,
+         "obj": Combustion_Calculations(s).create()},
+        {"diff": chemical_formula(s).difficulty,
+         "obj": chemical_formula(s).create()},
+
+    ]
+    return Chemistry
+
+
+def Biology(s):
+    Biology = [
+        {"diff": biological_gene(s).difficulty, "obj": biological_gene(s).create()},
+        {"diff": biological_DNA(s).difficulty, "obj": biological_DNA(s).create()},
+        {"diff": biological_protein(s).difficulty, "obj": biological_protein(s).create()},
+        {"diff": biological_Flag_Recap(s).difficulty, "obj": biological_Flag_Recap(s).create()},
+
+    ]
+    return Biology
+
+
+def Mathematics(s):
+    Mathematics = [
+        {"diff": find_volume_cone(s).difficulty, "obj": find_volume_cone(s).create()},
+        {"diff": find_ball_cone(s).difficulty, "obj": find_ball_cone(s).create()},
+        {"diff": binary_first_equation(s).difficulty, "obj": binary_first_equation(s).create()},
+        {"diff": parabola_2(s).difficulty, "obj": parabola_2(s).create()},
+        {"diff": parabola(s).difficulty, "obj": parabola(s).create()},
+        {"diff": radius(s).difficulty, "obj": radius(s).create()},
+    ]
+    return Mathematics
+
+
+def Physics(s):
+    Physics = [
+        {"diff": gravity_work(s).difficulty, "obj": gravity_work(s).create()},
+        {"diff": cosmic_speed(s).difficulty, "obj": cosmic_speed(s).create()},
+    ]
+    return Physics
+
+
+def study(s):
+    study = [
+        {"diff": study_build_up(s).difficulty, "obj": study_build_up(s).create()},
+    ]
+    return study
+
+
+def car_subject(s):
+    car_subject = [
+        {"diff": car_subject_one(s).difficulty, "obj": car_subject_one(s).create()},
+    ]
+    return car_subject
+
+
+def bili(s):
+    bili = [
+        {"diff": bili_hard_core(s).difficulty, "obj": bili_hard_core(s).create()},
+    ]
+    return bili
+
+
+def Songci(s):
+    songci = [
+        {"diff": songci_300(s).difficulty, "obj": songci_300(s).create()},
+    ]
+    return songci
+
+
+def Lunyu(s):
+    lunyus = [
+        {"diff": lunyu(s).difficulty, "obj": lunyu(s).create()},
+    ]
+    return lunyus
+
+
 class Importer(object):
     def __init__(self, s=time.time()):
         self.samples = s
-        self.Chemistry = [
-            {"diff": Combustion_Calculations(time.time()).difficulty,
-             "obj": Combustion_Calculations(time.time()).create()},
-            {"diff": chemical_formula(time.time()).difficulty,
-             "obj": chemical_formula(time.time()).create()},
-
-        ]
-        self.Biology = [
-            {"diff": biological_gene(s).difficulty, "obj": biological_gene(s).create()},
-            {"diff": biological_DNA(s).difficulty, "obj": biological_DNA(s).create()},
-            {"diff": biological_protein(s).difficulty, "obj": biological_protein(s).create()},
-            {"diff": biological_Flag_Recap(s).difficulty, "obj": biological_Flag_Recap(s).create()},
-
-        ]
-        self.Mathematics = [
-            {"diff": find_volume_cone(s).difficulty, "obj": find_volume_cone(s).create()},
-            {"diff": find_ball_cone(s).difficulty, "obj": find_ball_cone(s).create()},
-            {"diff": binary_first_equation(s).difficulty, "obj": binary_first_equation(s).create()},
-            {"diff": parabola_2(s).difficulty, "obj": parabola_2(s).create()},
-            {"diff": parabola(s).difficulty, "obj": parabola(s).create()},
-            {"diff": radius(s).difficulty, "obj": radius(s).create()},
-        ]
-        self.Physics = [
-            {"diff": gravity_work(s).difficulty, "obj": gravity_work(s).create()},
-            {"diff": cosmic_speed(s).difficulty, "obj": cosmic_speed(s).create()},
-        ]
-        self.study = [
-            {"diff": study_build_up(s).difficulty, "obj": study_build_up(s).create()},
-        ]
-        self.car_subject_one = [
-            {"diff": car_subject_one(s).difficulty, "obj": car_subject_one(s).create()},
-        ]
-        self.bili_hard_core = [
-            {"diff": bili_hard_core(s).difficulty, "obj": bili_hard_core(s).create()},
-        ]
-
-        self.songci_300 = [
-            {"diff": songci_300(s).difficulty, "obj": songci_300(s).create()},
-        ]
-        self.lunyu = [
-            {"diff": lunyu(s).difficulty, "obj": lunyu(s).create()},
-        ]
 
     @staticmethod
     def reset(difficulty_min, difficulty_limit):
@@ -694,12 +779,19 @@ class Importer(object):
                 difficulty_min = 1
         return difficulty_min, difficulty_limit
 
+    @staticmethod
+    def getMethod():
+        return ["数学题库", "物理题库", "化学题库", "生物题库", "图形化学", "学习强国", "宋词300", "论语问答", "科目一", "哔哩硬核测试"]
+
     def pull(self, difficulty_min=1, difficulty_limit=5, model_name="数学题库"):
+        difficulty_min = int(difficulty_min)
+        difficulty_limit = int(difficulty_limit)
         verify = {"diff": binary_first_equation(time.time()).difficulty,
                   "obj": binary_first_equation(time.time()).create()}
         difficulty_min, difficulty_limit = Importer.reset(difficulty_min, difficulty_limit)
         if model_name == "数学题库":
-            verify_papaer = [i for i in self.Mathematics if difficulty_min <= i.get("diff") <= difficulty_limit]
+            verify_papaer = [i for i in Mathematics(self.samples) if
+                             difficulty_min <= i.get("diff") <= difficulty_limit]
             if len(verify_papaer) != 0:
                 random.shuffle(verify_papaer)
                 verify = (choice(verify_papaer))
@@ -707,14 +799,14 @@ class Importer(object):
                 verify = {"diff": binary_first_equation(time.time()).difficulty,
                           "obj": binary_first_equation(time.time()).create()}
         elif model_name == "物理题库":
-            verify_papaer = [i for i in self.Physics if difficulty_min <= i.get("diff") <= difficulty_limit]
+            verify_papaer = [i for i in Physics(self.samples) if difficulty_min <= i.get("diff") <= difficulty_limit]
             if len(verify_papaer) != 0:
                 random.shuffle(verify_papaer)
                 verify = (choice(verify_papaer))
             else:
                 verify = {"diff": gravity_work(time.time()).difficulty, "obj": gravity_work(time.time()).create()}
         elif model_name == "化学题库":
-            verify_papaer = [i for i in self.Chemistry if difficulty_min <= i.get("diff") <= difficulty_limit]
+            verify_papaer = [i for i in Chemistry(self.samples) if difficulty_min <= i.get("diff") <= difficulty_limit]
             if len(verify_papaer) != 0:
                 random.shuffle(verify_papaer)
                 verify = (choice(verify_papaer))
@@ -722,24 +814,25 @@ class Importer(object):
                 verify = {"diff": Combustion_Calculations(time.time()).difficulty,
                           "obj": Combustion_Calculations(time.time()).create()}
         elif model_name == "生物题库":
-            verify_papaer = [i for i in self.Biology if difficulty_min <= i.get("diff") <= difficulty_limit]
+            verify_papaer = [i for i in Biology(self.samples) if difficulty_min <= i.get("diff") <= difficulty_limit]
             if len(verify_papaer) != 0:
                 random.shuffle(verify_papaer)
                 verify = (choice(verify_papaer))
                 # verify = (random.sample(verify_papaer, 1)[0])
             else:
                 verify = {"diff": biological_gene(time.time()).difficulty, "obj": biological_gene(time.time()).create()}
-
+        elif model_name == "图形化学":
+            verify = Chemistry_Pic(time.time())[0]
         elif model_name == "学习强国":
-            verify = self.study[0]
+            verify = study(time.time())[0]
         elif model_name == "宋词300":
-            verify = self.songci_300[0]
+            verify = Songci(time.time())[0]
         elif model_name == "论语问答":
-            verify = self.lunyu[0]
+            verify = Lunyu(time.time())[0]
         elif model_name == "科目一":
-            verify = self.car_subject_one[0]
+            verify = car_subject(time.time())[0]
         elif model_name == "哔哩硬核测试":
-            verify = self.bili_hard_core[0]
+            verify = bili(time.time())[0]
         return verify.get("obj")
 
 # print(chemical_formula.create())
