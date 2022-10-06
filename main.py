@@ -9,7 +9,13 @@
 #
 # print(e2 - e1)
 # -*- coding: utf-8 -*-
+import time
 
-from CaptchaCore.CaptchaWorker import Tool_CaptchaCore
+from CaptchaCore.CaptchaWorker import chemical_formula
 
-Tool_CaptchaCore.peiping("H2O+Fe", "FeO+H4")
+start = time.time()
+res = chemical_formula(time.time()).difficulty()
+print(res)
+end = time.time()
+
+print(end - start)

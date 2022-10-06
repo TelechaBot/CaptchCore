@@ -89,43 +89,6 @@ class Tool_CaptchaCore(object):
                 print(f"出现错误: {str(error)}")
                 return False, False
 
-    @staticmethod
-    def drawPic(news_content, font='simkai.ttf', filename="temp.png"):
-        if pathlib.Path(filename).exists():
-            from PIL import Image, ImageDraw, ImageFont  # 引入图片，画图笔，图片字体三个库
-            news_content = news_content.splitlines()  # 按行分割
-            import textwrap  # 手动换行文字
-            news_wrap = []
-            for line in news_content:
-                if len(line) < 4:
-                    continue
-                elif len(line) < 25:
-                    news_wrap.append(line)  # 添加到数组中
-                else:  # 若字数大于25个字
-                    wrap = textwrap.wrap(line, 25)  # 按每行25个字分割成数组
-                    news_wrap = news_wrap + wrap
-            IMG_SIZE = (920, len(news_wrap) * 60)  # 图片尺寸
-            img_1 = Image.new('RGB', IMG_SIZE, (255, 255, 255))  # 底色三个255表示纯白
-            draw = ImageDraw.Draw(img_1)  # 创建一个画笔
-
-            header_position = (60, 30)
-            header_font = ImageFont.truetype(font, 55)
-            current_height = 100
-            for line in news_wrap:
-                if line.startswith('【'):
-                    news_font = ImageFont.truetype(font, 45)  # 标题的字体楷体，字号50
-                    draw.text((60, current_height + 30), line, '#726053', news_font)
-                    current_height += 80
-                else:
-                    news_font = ImageFont.truetype(font, 30)
-                    draw.text((60, current_height), line, '#726053', news_font)
-                    current_height += 40
-
-            img_1.save(filename)
-            return filename
-        else:
-            return False
-
 
 # π
 class bili_hard_core(object):
@@ -196,7 +159,7 @@ class chemical_formula(object):
     @staticmethod
     def create():
         # rsd = (random.randint(1, 5) * 1)
-        sde = (random.randint(2, 6) * 1)
+        sde = (random.randint(2, 8) * 1)
         rse = (random.randint(1, 4) * 2)
         inputs = f"P{sde}+H2O"
         output = "PH4+H3PO4"
@@ -781,7 +744,8 @@ class Importer(object):
 
     @staticmethod
     def getMethod():
-        return ["数学题库", "物理题库", "化学题库", "生物题库", "图形化学", "学习强国", "宋词300", "论语问答", "科目一", "哔哩硬核测试"]
+        return ["数学题库", "物理题库", "化学题库", "生物题库", "图形化学", "学习强国", "宋词300", "论语问答", "科目一",
+                "哔哩硬核测试"]
 
     def pull(self, difficulty_min=1, difficulty_limit=5, model_name="数学题库"):
         difficulty_min = int(difficulty_min)
