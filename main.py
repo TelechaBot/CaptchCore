@@ -11,11 +11,20 @@
 # -*- coding: utf-8 -*-
 import time
 
-from CaptchaCore.CaptchaWorker import chemical_formula
+
+
+from CaptchaCore.CaptchaWorker import TTS_verification
 
 start = time.time()
-res = chemical_formula(time.time()).difficulty()
+res = TTS_verification(time.time()).create()
 print(res)
 end = time.time()
 
 print(end - start)
+
+
+def MD5(strs: str):
+    import hashlib
+    hl = hashlib.md5()
+    hl.update(strs.encode(encoding='utf-8'))
+    return hl.hexdigest()
