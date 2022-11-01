@@ -11,8 +11,6 @@
 # -*- coding: utf-8 -*-
 import time
 
-
-
 from CaptchaCore.CaptchaWorker import TTS_verification
 
 start = time.time()
