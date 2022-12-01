@@ -10,14 +10,20 @@
 # print(e2 - e1)
 # -*- coding: utf-8 -*-
 import time
-
-from CaptchaCore.CaptchaWorker import TTS_verification
+import CaptchaCore
 
 start = time.time()
-res = TTS_verification(time.time()).create()
+res = CaptchaCore.gravity_work(time.time()).create()
+print(res)
+res = CaptchaCore.biological_DNA(time.time()).create()
+print(res)
+res = CaptchaCore.binary_first_equation(time.time()).create()
+print(res)
+res = CaptchaCore.Combustion_Calculations(time.time()).create()
+print(res)
+res = CaptchaCore.cosmic_speed(time.time()).create()
 print(res)
 end = time.time()
-
 print(end - start)
 
 
